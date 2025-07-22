@@ -46,3 +46,9 @@ class DocumentProcessor:
                 current_section = section.strip()
             
         return documents
+    
+    def enhance_metadata(self, documents: List[Document], additional_metadata: Dict[str, Any]) -> List[Document]:
+        """Add additional metadata to all documents in the list"""
+        for doc in documents:
+            doc.metadata.update(additional_metadata)
+        return documents
