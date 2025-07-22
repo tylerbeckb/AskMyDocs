@@ -52,3 +52,23 @@ class DocumentProcessor:
         for doc in documents:
             doc.metadata.update(additional_metadata)
         return documents
+    
+    def process_document(self, text: str, metadata: Dict[str, Any], chunk_strategy: str = "default") -> List[Document]:
+        """Process a document with the specified chunking strategy"""
+        if chunk_strategy == "default":
+            return self.chunk_text(text, metadata=metadata)
+        elif chunk_strategy == "insurance":
+            return self.chunk_insurance_doc(text, metadata=metadata)
+        else:
+            raise ValueError(f"Unknown chunking strategy: {chunk_strategy}")
+        
+    def clean_chunks(self, chunks: List[Document]) -> List[Document]:
+        """Clean up chunks - remove empty ones, trim whitespace"""
+        cleaned = []
+        for chunk in chunks:
+            text = chunk.page_content.strip()
+            # Skip empty chunks
+            if text:
+                chunk.page_content = text
+                cleaned.append(chunk)
+        return cleaned
