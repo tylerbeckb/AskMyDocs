@@ -1,7 +1,7 @@
 from langchain.vectorstores import FAISS
 from langchain.schema import Document
 from src.models.embeddings import EmbeddingModel
-from typing import List, Dict, Any, Optional
+from typing import List, Optional
 import os
 
 class VectorStore:
