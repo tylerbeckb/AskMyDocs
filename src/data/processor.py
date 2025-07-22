@@ -17,3 +17,32 @@ class DocumentProcessor:
         )
         chunks = splitter.create_documents([text], [metadata or {}])
         return chunks
+    
+    def chunk_insurance_doc(self, text: str, metadata: Dict[str, Any] = None) -> List[Document]:
+        """Specialised chunking for insurance documents"""
+        section_pattern = r'(?:^|\n)([A-Z][A-Z\s]+:)'
+
+        # Find all sections
+        sections = re.split(section_pattern, text)
+
+        documents = []
+        current_section = "GENERAL"
+
+        # Process sections
+        for i, section in enumerate(sections):
+            # Content
+            if i % 2 == 0 and i > 0:
+                # Combine header and content
+                section_text = sections[i-1] + section
+                section_metadata = metadata.copy() if metadata else {}
+                section_metadata["section"] = current_section
+                section_metadata["chunk_id"] = str(uuid.uuid4())
+
+                # Create document
+                doc = Document(page_content=section_text, metadata=section_metadata)
+                documents.append(doc)
+            # Header
+            elif i % 2 == 1:
+                current_section = section.strip()
+            
+        return documents
