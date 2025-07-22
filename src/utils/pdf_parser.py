@@ -1,6 +1,6 @@
 import fitz 
 import re
-from typing import Dict, List, Tuple, Any, Optional
+from typing import Dict, List, Any
 
 class PDFParser:
     def __init__(self):
