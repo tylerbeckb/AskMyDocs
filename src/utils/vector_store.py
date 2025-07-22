@@ -23,3 +23,21 @@ class VectorStore:
             raise ValueError(f"Unsupported database type: {self.db_type}")
         
         return self.store
+    
+    def load(self, persist_directory: str):
+        """Load a vector store from disk"""
+        if not os.path.exists(persist_directory):
+            raise FileNotFoundError(f"Persist directory does not exist: {persist_directory}")
+        
+        if self.db_type == "faiss":
+            self.store = FAISS.load_local(persist_directory, self.embedding_model)
+
+        return self.store
+    
+    def similarity_search(self, query: str, k: int = 4) -> List[Document]:
+        """Perform a similarity search on the vector store"""
+        if not self.store:
+            raise ValueError("Vector store is not initialized. Please create or load it first.")
+        
+        return self.store.similarity_search(query, k=k)
+    
