@@ -1,6 +1,6 @@
 from typing import List, Dict, Any, Optional
 from langchain.schema import Document
-from langchain.text_splitter import RecursiveCharacterTextSplitter, MarkdownTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 import re
 import uuid
 
