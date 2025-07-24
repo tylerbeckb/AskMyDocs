@@ -13,7 +13,7 @@ class QueryResponse(BaseModel):
     answer: str
     sources: List[DocumentSource]
 
-class DocumentUpLoadRequest(BaseModel):
+class DocumentUploadResponse(BaseModel):
     filename: str
     chunks: int
     status: str
