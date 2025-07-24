@@ -39,6 +39,23 @@ def get_rag_components():
         "answer_generator": answer_generator,
     }
 
+@router.post("/query", response_model=QueryResponse)
+async def query_documents(request: QueryRequest, components = Depends(get_rag_components)):
+    """Query the document knowledge base"""
+    answer_generator = components["answer_generator"]
+
+    try:
+        result = answer_generator.generate_answer(
+            query=request.query,
+            top_k=request.top_k
+        )
+        return QueryResponse(
+            answer=request["answer"],
+            sources=result["sources"]
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.post("/upload", response_model=DocumentUploadResponse)
 async def upload_document (
     background_tasks: BackgroundTasks,
