@@ -7,3 +7,17 @@ class LLMService:
         self.model_name = model_name
         self.temperature = temparture
         self.llm = ChatOpenAI(model_name=self.model_name, temperature=self.temperature)
+
+    def generate_response(self, system_prompt: str, user_prompt: str) -> str:
+        """Generate a response using the OpenAI API"""
+        messages = [
+            SystemMessage(content=system_prompt),
+            HumanMessage(content=user_prompt)
+        ]
+
+        try:
+            response = self.llm(messages)
+            return response.content
+        except Exception as e:
+            raise RuntimeError(f"Error generating response: {str(e)}")
+        
