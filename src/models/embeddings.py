@@ -41,15 +41,15 @@ class DeepSeekEmbeddings(Embeddings):
         return data["data"][0]["embedding"]
 
 class EmbeddingModel:
-    def __init__(self, model_type="openai"):
+    def __init__(self, model_type="deepseek"):
         self.model_type = model_type
         
-        if model_type == "openai":
-            self.model = OpenAIEmbeddings()
+        if model_type == "deepseek":
+            self.model = DeepSeekEmbeddings()
         elif model_type == "huggingface":
             self.model_type = HuggingFaceEmbeddings(model_name = "sentence-transformers/all-mpnet-base-v2")
         else:
-            raise ValueError("Unsupported model type. Choose 'openai' or 'huggingface'.")
+            raise ValueError("Unsupported model type. Choose 'deepseek' or 'huggingface'.")
         
     def embed_text(self, text: str) -> List[float]:
         """Convert a single text into an embedding vector"""

@@ -1,21 +1,65 @@
+from langchain.llms.base import BaseLLM
+from langchain.schema import HumanMessage, SystemMessage, AIMessage
 from langchain.chat_models import ChatOpenAI
-from langchain.schema import HumanMessage, SystemMessage
+from typing import List, Optional, Dict, Any
+import os 
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+class DeepSeekLLM(BaseLLM):
+    """Custom LLM class for DeepSeek API"""
+
+    def __init__(self, model_name="deepseek-chat", temperature=0.0, api_key=None):
+        super().__init__()
+        self.model_name = model_name
+        self.temperature = temperature
+        self.api_key = api_key or os.getenv("DEEPSEEK_API_KEY")
+        if not self.api_key:
+            raise ValueError("DeepSeek API key is required")
+        self.api_url = "https://api.deepseek.com/v1/chat/completions"
+
+    def _call(self, prompt: str, **kwargs) -> str:
+        """Process a text prompt and return a completion"""
+        messages = [{"role": "user", "content": prompt}]
+        return self._generate_response(messages)
+    
+    def _generate_response(self, messages: List[Dict[str, str]]) -> str:
+        """Generate a response from the DeepSeek API"""
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json"
+        }
+
+        payload = {
+            "model": self.model_name,
+            "messages": messages,
+            "temperature": self.temperature
+        }
+
+        response = requests.post(self.api_url, headers=headers, json=payload)
+        if response.status_code != 200:
+            raise ValueError(f"Error from DeepSeek API: {response.text}")
+        data = response.json()
+        return data["choices"][0]["message"]["content"]
+
 
 class LLMService:
     def __init__(self, model_name: str = "gpt-3.5-turbo", temparture: float = 0.0):
         self.model_name = model_name
         self.temperature = temparture
-        self.llm = ChatOpenAI(model_name=self.model_name, temperature=self.temperature)
+        self.llm = DeepSeekLLM(model_name=self.model_name, temperature=self.temperature)
 
     def generate_response(self, system_prompt: str, user_prompt: str) -> str:
-        """Generate a response using the OpenAI API"""
+        """Generate a response using the DeepSeek API"""
         messages = [
-            SystemMessage(content=system_prompt),
-            HumanMessage(content=user_prompt)
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
         ]
 
         try:
-            response = self.llm(messages)
+            response = self.llm._generate_response(messages)
             return response.content
         except Exception as e:
             raise RuntimeError(f"Error generating response: {str(e)}")

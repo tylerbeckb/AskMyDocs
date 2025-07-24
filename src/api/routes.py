@@ -15,7 +15,7 @@ router = APIRouter()
 # Dependency to get RAG components
 def get_rag_components():
     # Initialise embedding model
-    embedding_model = EmbeddingsModel(model_type="openai")
+    embedding_model = EmbeddingsModel(model_type="deepseek")
 
     # Initialise vector store
     vector_store = VectorStore(embedding_model=embedding_model, db_type="faiss")
@@ -29,13 +29,13 @@ def get_rag_components():
     retriever = Retriever(vector_store=vector_store)
 
     # Initialise LLM service
-    llm_service = LLMService(model_name="gpt-3.5-turbo", temparture=0.0)
+    llm_service = LLMService(model_name="deepseek-chat", temparture=0.0)
 
     # Initialise answer generator
     answer_generator = AnswerGenerator(retriever=retriever, llm_service=llm_service)
 
     return {
-        "indexer": DocumentIndexer(embedding_model_type="openai"),
+        "indexer": DocumentIndexer(embedding_model_type="deepseek"),
         "answer_generator": answer_generator,
     }
 
@@ -50,7 +50,7 @@ async def query_documents(request: QueryRequest, components = Depends(get_rag_co
             top_k=request.top_k
         )
         return QueryResponse(
-            answer=request["answer"],
+            answer=result["answer"],
             sources=result["sources"]
         )
     except Exception as e:
