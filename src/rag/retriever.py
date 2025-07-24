@@ -1,5 +1,5 @@
 from src.utils.vector_store import VectorStore
-from typing import Dict, Any, Optional, List
+from typing import List
 from langchain.schema import Document
 
 class Retriever:
@@ -13,3 +13,17 @@ class Retriever:
         
         results = self.vector_store.similarity_search(query, k=top_k)
         return results
+    
+    def format_context(self, documents: List[Document]) -> str:
+        """Format retrieved documents into a context string"""
+        context_parts = []
+
+        for i, doc in enumerate(documents):
+            # Format each document with its metadata
+            source = doc.metadata.get("source", "Unknown")
+            section = doc.metadata.get("section", "General")
+
+            context_part = f"[Documment {i+1}] From: {source}, Section: {section}\n{doc.page_content}\n"
+            context_parts.append(context_part)
+
+        return "\n".join(context_parts)
