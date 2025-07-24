@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, BackgroundTasks
-from src.api.schemas import QueryRequest, QueryResponse, DocumentUpLoadRequest, ErrorResponse
+from src.api.schemas import QueryRequest, QueryResponse, DocumentUploadResponse, ErrorResponse
 from src.rag.generator import AnswerGenerator
 from src.rag.indexing import DocumentIndexer
 from src.utils.vector_store import VectorStore
@@ -38,3 +38,36 @@ def get_rag_components():
         "indexer": DocumentIndexer(embedding_model_type="openai"),
         "answer_generator": answer_generator,
     }
+
+@router.post("/upload", response_model=DocumentUploadResponse)
+async def upload_document (
+    background_tasks: BackgroundTasks,
+    file: UploadFile = File(...),
+    components = Depends(get_rag_components)
+):
+    """Upload and index a document."""
+    indexer = components["indexer"]
+
+    # Save uploaded file
+    file_path = f"data/pdfs/{uuid.uuid4()}_{file.filename}"
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+    with open(file_path, "wb") as f:
+        content = await file.read()
+        f.write(content)
+
+    # Index the document in the background
+    def index_document():
+        try:
+            indexer.index_pdf(pdf_path=file_path, persist_dir="data/vector_store")
+        except Exception as e:
+            print(f"Error indexing document: {e}")
+
+    # Add indexing task to background
+    background_tasks.add_task(index_document)
+
+    return DocumentUploadResponse(
+        filename=file.filename,
+        chunks=0, # Place holder
+        status="processing"
+    )
