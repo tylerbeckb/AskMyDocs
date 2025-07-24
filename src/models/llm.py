@@ -21,3 +21,7 @@ class LLMService:
         except Exception as e:
             raise RuntimeError(f"Error generating response: {str(e)}")
         
+    def generate_with_context(self, system_prompt: str, context: str, query: str) -> str:
+        """Generate a response with context"""
+        user_prompt = f"Context information is below:\n{context}\n\nGiven the context, please answer the question: {query}"
+        return self.generate_response(system_prompt, user_prompt)
