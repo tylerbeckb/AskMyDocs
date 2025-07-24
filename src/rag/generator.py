@@ -1,6 +1,6 @@
 from src.models.llm import LLMService
 from src.rag.retriever import Retriever
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any
 
 class AnswerGenerator:
     def __init__(self, retriever: Retriever, llm_service: LLMService):
