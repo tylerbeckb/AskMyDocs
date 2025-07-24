@@ -3,19 +3,18 @@ from src.api.schemas import QueryRequest, QueryResponse, DocumentUploadResponse,
 from src.rag.generator import AnswerGenerator
 from src.rag.indexing import DocumentIndexer
 from src.utils.vector_store import VectorStore
-from src.models.embeddings import EmbeddingsModel
+from src.models.embeddings import EmbeddingModel
 from src.rag.retriever import Retriever
 from src.models.llm import LLMService
 import os
 import uuid
-from typing import Dict
 
 router = APIRouter()
 
 # Dependency to get RAG components
 def get_rag_components():
     # Initialise embedding model
-    embedding_model = EmbeddingsModel(model_type="deepseek")
+    embedding_model = EmbeddingModel(model_type="deepseek")
 
     # Initialise vector store
     vector_store = VectorStore(embedding_model=embedding_model, db_type="faiss")
