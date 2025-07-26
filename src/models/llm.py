@@ -60,7 +60,7 @@ class LLMService:
 
         try:
             response = self.llm._generate_response(messages)
-            return response.content
+            return response
         except Exception as e:
             raise RuntimeError(f"Error generating response: {str(e)}")
         
