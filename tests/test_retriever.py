@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock
 from src.rag.retriever import Retriever
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 class TestRetriever:
     def test_init(self):

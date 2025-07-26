@@ -1,8 +1,7 @@
 import pytest
-import os
 import tempfile
 from src.data.loader import DocumentLoader
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 class TestDocumentLoader:
     def test_init(self):

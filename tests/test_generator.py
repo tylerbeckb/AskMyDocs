@@ -1,9 +1,8 @@
-import pytest
 from unittest.mock import MagicMock
 from src.rag.generator import AnswerGenerator
 from src.models.llm import LLMService
 from src.rag.retriever import Retriever
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 class TestAnswerGenerator:
     def setup_method(self):
