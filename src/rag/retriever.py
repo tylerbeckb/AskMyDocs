@@ -1,6 +1,6 @@
 from src.utils.vector_store import VectorStore
 from typing import List
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 class Retriever:
     def __init__(self, vector_store: VectorStore):

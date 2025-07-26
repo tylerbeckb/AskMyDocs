@@ -1,5 +1,5 @@
-from langchain.embeddings import OpenAIEmbeddings, HuggingFaceEmbeddings
-from langchain.embeddings.base import Embeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_core.embeddings import Embeddings
 from typing import List
 import os
 import requests
@@ -47,7 +47,7 @@ class EmbeddingModel:
         if model_type == "deepseek":
             self.model = DeepSeekEmbeddings()
         elif model_type == "huggingface":
-            self.model_type = HuggingFaceEmbeddings(model_name = "sentence-transformers/all-mpnet-base-v2")
+            self.model = HuggingFaceEmbeddings(model_name = "sentence-transformers/all-mpnet-base-v2")
         else:
             raise ValueError("Unsupported model type. Choose 'deepseek' or 'huggingface'.")
         
