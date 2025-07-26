@@ -37,7 +37,7 @@ class TestAnswerGenerator:
         self.mock_llm_service.generate_with_context.return_value = "Generated answer"
 
         # Generate answer
-        result = self.generator.generate_answer("test query")
+        result = self.answer_generator.generate_answer("test query")
 
         # Verify result
         assert result["answer"] == "Generated answer"
@@ -54,7 +54,7 @@ class TestAnswerGenerator:
         self.mock_retriever.retrieve.return_value = []
 
         # Generate answer
-        result = self.generator.generate_answer("test query")
+        result = self.answer_generator.generate_answer("test query")
 
         # Verify result
         assert "don't have enough information" in result["answer"]
@@ -66,5 +66,5 @@ class TestAnswerGenerator:
     def test_set_system_prompt(self):
         """Test setting a custom system prompt"""
         new_prompt = "New system prompt"
-        self.generator.set_system_prompt(new_prompt)
-        assert self.generator.system_prompt == new_prompt
+        self.answer_generator.set_system_prompt(new_prompt)
+        assert self.answer_generator.system_prompt == new_prompt
