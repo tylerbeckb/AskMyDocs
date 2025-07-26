@@ -1,7 +1,5 @@
-from langchain.llms.base import BaseLLM
-from langchain.schema import HumanMessage, SystemMessage, AIMessage
-from langchain.chat_models import ChatOpenAI
-from typing import List, Optional, Dict, Any
+from langchain_core.language_models.llms import BaseLLM
+from typing import List, Dict
 import os 
 import requests
 from dotenv import load_dotenv
@@ -31,7 +29,6 @@ class DeepSeekLLM(BaseLLM):
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"
         }
-
         payload = {
             "model": self.model_name,
             "messages": messages,
@@ -46,9 +43,9 @@ class DeepSeekLLM(BaseLLM):
 
 
 class LLMService:
-    def __init__(self, model_name: str = "gpt-3.5-turbo", temparture: float = 0.0):
+    def __init__(self, model_name: str = "gpt-3.5-turbo", temperature: float = 0.0):
         self.model_name = model_name
-        self.temperature = temparture
+        self.temperature = temperature
         self.llm = DeepSeekLLM(model_name=self.model_name, temperature=self.temperature)
 
     def generate_response(self, system_prompt: str, user_prompt: str) -> str:
@@ -60,7 +57,7 @@ class LLMService:
 
         try:
             response = self.llm._generate_response(messages)
-            return response.content
+            return response
         except Exception as e:
             raise RuntimeError(f"Error generating response: {str(e)}")
         

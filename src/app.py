@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from src.api.routes import router
-from src.exceptions import DocumentProcessingError, VectorStoreError, LLMError, DocumentNotFoundError
+from src.api.exceptions import DocumentProcessingError, VectorStoreError, LLMError, DocumentNotFoundError
 import os
 from dotenv import load_dotenv
 import logging

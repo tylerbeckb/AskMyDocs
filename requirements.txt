@@ -6,6 +6,8 @@ python-multipart
 # LLM & RAG libraries
 langchain>=0.0.335
 langchain-community>=0.0.10
+langchain-core>=0.1.0
+langchain-text-splitters>=0.0.1
 requests>=2.28.0
 
 # Vector databases

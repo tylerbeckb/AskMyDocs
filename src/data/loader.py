@@ -1,8 +1,8 @@
-from langchain.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 import os
 from typing import List
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 class DocumentLoader:
     def __init__(self, chunk_size=1000, chunk_overlap=200):
