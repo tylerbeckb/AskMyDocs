@@ -9,7 +9,6 @@ from src.rag.retriever import Retriever
 from src.models.llm import LLMService
 import os
 import uuid
-from typing import Dict
 import logging
 
 router = APIRouter()
@@ -33,7 +32,7 @@ def get_rag_components():
         retriever = Retriever(vector_store=vector_store)
 
         # Initialise LLM service
-        llm_service = LLMService(model_name="deepseek-chat", temparture=0.0)
+        llm_service = LLMService(model_name="deepseek-chat", temperarture=0.0)
 
         # Initialise answer generator
         answer_generator = AnswerGenerator(retriever=retriever, llm_service=llm_service)
