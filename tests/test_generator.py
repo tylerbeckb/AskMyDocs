@@ -19,8 +19,8 @@ class TestAnswerGenerator:
         """Test AnswerGenerator initialisation"""
         assert self.answer_generator.retriever == self.mock_retriever
         assert self.answer_generator.llm_service == self.mock_llm_service
-        assert isinstance(self.generator.system_prompt, str)
-        assert len(self.generator.system_prompt) > 0
+        assert isinstance(self.answer_generator.system_prompt, str)
+        assert len(self.answer_generator.system_prompt) > 0
 
     def test_generate_answer_with_docs(self):
         """Test answer generation with retrieved documents"""

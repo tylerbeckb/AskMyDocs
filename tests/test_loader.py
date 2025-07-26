@@ -15,7 +15,7 @@ class TestDocumentLoader:
         """Test handling of non-existent file"""
         loader = DocumentLoader()
         with pytest.raises(FileNotFoundError):
-            loader.load("non_existent_file.pdf")
+            loader.load_pdf("non_existent_file.pdf")
 
     def test_load_pdf(self, monkeypatch):
         """Test loading a PDF file with mocked PyPDFLoader"""
