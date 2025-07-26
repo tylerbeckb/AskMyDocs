@@ -1,7 +1,5 @@
-from langchain.llms.base import BaseLLM
-from langchain.schema import HumanMessage, SystemMessage, AIMessage
-from langchain.chat_models import ChatOpenAI
-from typing import List, Optional, Dict, Any
+from langchain_core.language_models.llms import BaseLLM
+from typing import List, Dict
 import os 
 import requests
 from dotenv import load_dotenv
