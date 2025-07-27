@@ -209,6 +209,22 @@ Run the test suite with:
     pytest
 ```
 
+## Troubleshooting
+
+### Common Issues
+
+1. **API Key Not Found**
+    - Ensure your `.env` file contains a valid `DEEPSEEK_API_KEY`
+
+2. **PDF Processing Fails**
+    - Verify the PDF is not password-protected or corrupted
+    - Try with a smaller PDF if the file is very large
+    
+3. **Frontend Can't Connect to Backend**
+    - Ensure both frontend and backend is running
+    - Check that the backend URL is `.env.local` is correct
+    - Verify CORS settings in `src/app.pyz include your frontend origin
+
 ## Acknowledgments
 
 * LangChain for providing the RAG framework
