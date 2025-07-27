@@ -65,7 +65,39 @@ export default function ChatInterface() {
                         ? 'bg-blue-500 text-white rounded-br-none'
                         : 'bg-gray-200 rounded-bl-none'
                     }`}>
-                    <ReactMarkdown>{message.content}</ReactMarkdown>
+                    <ReactMarkdown
+                        components={{
+                            // Make links safe by opening in new tab
+                            a: ({node, ...props}: any) => (
+                                <a {...props} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline" />
+                            ),
+                            // Style headings appropriately
+                            h1: ({node, ...props}: any) => (
+                                <h1 {...props} className="text-xl font-bold my-2" />
+                            ),
+                            h2: ({node, ...props}: any) => (
+                                <h2 {...props} className="text-lg font-bold my-1.5" />
+                            ),
+                            h3: ({node, ...props}: any) => (
+                                <h3 {...props} className="text-md font-semibold my-1" />
+                            ),
+                            // Style code blocks
+                            code: ({node, inline, ...props}: any) => (
+                                inline 
+                                    ? <code {...props} className="bg-gray-100 px-1 rounded" />
+                                    : <code {...props} className="block bg-gray-100 p-2 rounded my-2 overflow-x-auto" />
+                            ),
+                            // Style lists
+                            ul: ({node, ...props}: any) => (
+                                <ul {...props} className="list-disc pl-5 my-2" />
+                            ),
+                            ol: ({node, ...props}: any) => (
+                                <ol {...props} className="list-decimal pl-5 my-2" />
+                            )
+                        }}
+                    >
+                        {message.content}
+                    </ReactMarkdown>
                     
                     {message.sources && message.sources.length > 0 && (
                         <div className="mt-2 text-xs border-t pt-1">
