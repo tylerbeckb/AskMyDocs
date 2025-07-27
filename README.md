@@ -53,15 +53,54 @@ Setup
     # Edit .env to add your API key
 ```
 
+## Frontend Setup
+
+1. Navigate to the frontend directory:
+```bash
+    cd frontend
+```
+
+2. Install dependencies:
+```bash
+    npm install
+```
+
+3. Setup environmnet variables:
+```bash
+    # Create .env.local file
+    echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > .env.local
+```
+
+4. Start the development server:
+```bash
+    npm run dev
+```
+
+The frontend will be available at http://localhost:3000
+
 ## Usage
 
-Starting the Server
+1. Starting the backend server
 ```bash
     python -m src.app
     # Or: uvicorn src.app:app --reload
 ```
 
-The API will be available at http://localhost:8000. Visit http://localhost:8000/docs for the interactive API documentation.
+2. Start the frontend development server"
+```bash
+    cd frontend
+    npm run dev
+```
+
+3. Access the application:
+* Frontend UI: http://localhost:3000
+* API Documentation: http://localhost:8000/docs
+
+Using the Web Interface
+1. Open http://localhost:3000 in your browser
+2. Upload a travel insurance PDF using the upload interface
+3. Once processing is complete, ask questions about your policy in the chat interface
+4. View the AI-generated answers with source citations from your document
 
 #### Basic Workflow
 
@@ -128,31 +167,39 @@ Response:
 
 ## Project Structure
 ```bash
-    askmydocs/
-        ├── src/
-        │   ├── api/
-        │   │   ├── exceptions.py    # Custom exception classes
-        │   │   ├── routes.py        # FastAPI route definitions
-        │   │   └── schemas.py       # Pydantic data models
-        │   ├── data/
-        │   │   ├── loader.py        # Document loading utilities
-        │   │   └── processor.py     # Document chunking and processing
-        │   ├── models/
-        │   │   ├── embeddings.py    # Embedding model configurations
-        │   │   └── llm.py           # LLM service implementation
-        │   ├── rag/
-        │   │   ├── generator.py     # Answer generation logic
-        │   │   ├── indexing.py      # Document indexing pipeline
-        │   │   └── retriever.py     # Context retrieval system
-        │   ├── utils/
-        │   │   ├── pdf_parser.py    # PDF text extraction
-        │   │   └── vector_store.py  # Vector database interface
-        │   └── app.py               # Main application entry point
-        ├── tests/                    # Test modules
-        ├── data/                     # Data storage directory
-        ├── .env.example              # Environment variables template
-        ├── requirements.txt          # Project dependencies
-        └── README.md                 
+askmydocs/
+    ├── src/
+    │   ├── api/
+    │   │   ├── exceptions.py    # Custom exception classes
+    │   │   ├── routes.py        # FastAPI route definitions
+    │   │   └── schemas.py       # Pydantic data models
+    │   ├── data/
+    │   │   ├── loader.py        # Document loading utilities
+    │   │   └── processor.py     # Document chunking and processing
+    │   ├── models/
+    │   │   ├── embeddings.py    # Embedding model configurations
+    │   │   └── llm.py           # LLM service implementation
+    │   ├── rag/
+    │   │   ├── generator.py     # Answer generation logic
+    │   │   ├── indexing.py      # Document indexing pipeline
+    │   │   └── retriever.py     # Context retrieval system
+    │   ├── utils/
+    │   │   ├── pdf_parser.py    # PDF text extraction
+    │   │   └── vector_store.py  # Vector database interface
+    │   └── app.py               # Main application entry point
+    ├── frontend/               # Next.js frontend application
+    │   ├── app/                # Next.js app directory
+    │   ├── components/         # React components
+    │   │   ├── ChatInterface.tsx  # Chat UI component
+    │   │   └── DocumentUpload.tsx # Document upload component
+    │   ├── public/             # Static assets
+    │   ├── package.json        # Frontend dependencies
+    │   └── tailwind.config.js  # Tailwind CSS configuration
+    ├── tests/                  # Test modules
+    ├── data/                   # Data storage directory
+    ├── .env.example            # Environment variables template
+    ├── requirements.txt        # Backend dependencies
+    └── README.md               
 ```
 
 ## Testing
