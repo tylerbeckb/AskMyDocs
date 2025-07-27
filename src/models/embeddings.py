@@ -31,7 +31,7 @@ class DeepSeekEmbeddings(Embeddings):
         }
         payload = {
             "text": text,
-            "model": "deepseek-chat"
+            "model": "deepseek-embed"
         }
 
         response = requests.post(self.api_url, headers=headers, json=payload)
