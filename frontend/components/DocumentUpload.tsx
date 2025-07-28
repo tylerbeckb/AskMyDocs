@@ -72,7 +72,7 @@ export default function DocumentUpload({ onSuccessfulUpload }: DocumentUploadPro
           <input {...getInputProps()} />
           <div className="flex flex-col items-center justify-center py-4">
             <svg 
-              className={`w-12 h-12 mb-3 ${isDragActive ? 'text-blue-500' : 'text-gray-400'}`} 
+              className={`w-8 h-8 mb-3 ${isDragActive ? 'text-blue-500' : 'text-gray-400'}`} 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24" 
