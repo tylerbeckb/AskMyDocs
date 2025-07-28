@@ -7,13 +7,13 @@ import ChatInterface from '@/components/ChatInterface';
 export default function Home() {
   const [showChat, setShowChat] = useState(false);
   const [hasUploadedDocument, setHasUploadedDocument] = useState(false);
-
+  
   const handleSuccessfulUpload = () => {
     setHasUploadedDocument(true);
   };
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
+    <div className="min-h-screen max-w-full overflow-x-hidden">
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -53,8 +53,7 @@ export default function Home() {
           <div className="bg-white rounded-xl shadow-md overflow-hidden mb-8 animate-fadeIn">
             <div className="p-6 border-b border-gray-100">
               <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                <span className="w-6 h-6 bg-blue-600 rounded-full text-white flex items-center justify-center text-sm">2</span>
-                Ask questions about your coverage
+                <span className="w-6 h-6 bg-blue-600 rounded-full text-white flex items-center justify-center text-sm">2: Ask questions about your coverage</span>
               </h2>
             </div>
             <div className="p-6">
